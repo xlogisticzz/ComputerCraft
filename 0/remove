@@ -1,0 +1,39 @@
+local tArgs = {...}
+
+function refuel(slot , amount)
+  local slot1 = tonumber(slot)
+  local amount1 = tonumber(amount)
+  if slot <= 16 then		
+    if turtle.getFuelLevel() < 20 then
+	  print("My current fuel level is: " .. turtle.getFuelLevel())
+      if turtle.getItemCount(slot1) < amount then
+        print("Im out of fuel")
+      else
+      turtle.select(slot1)
+      turtle.refuel(amount1)
+      turtle.select(1)
+	  print("My New Fuel is: " .. turtle.getFuelLevel())
+      end
+    end
+  else 
+    error("Slot size is too big[Refuel]")
+  end
+end
+
+if #tArgs == 1 then
+	for i = 1 , tArgs[1] do
+		while turtle.detectUp() == true do
+			refuel(1, 10)
+			turtle.digUp()
+			turtle.up()
+		end
+		while turtle.detectDown() ~= true do
+			refuel(1, 10)
+			turtle.down()
+		end
+		turtle.dig()
+		turtle.forward()
+	end
+else
+	error("Incorrect amounts of Argumnets")
+end

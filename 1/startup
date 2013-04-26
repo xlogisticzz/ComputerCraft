@@ -1,0 +1,3 @@
+shell.run("label","get")
+m = peripheral.wrap("top")
+shell.run("mobcontrolv2")

@@ -1,0 +1,480 @@
+local tArgs = {...}
+local numMoves = tonumber(tArgs[1])
+local extraArgs = tonumber(tArgs[2])
+local returnVal = 1
+
+function printUsage()
+  print("Usages:")
+  print("Return <distance>")
+end
+
+function refuel()
+  if turtle.getFuelLevel() < 20 then
+    if turtle.getItemCount(1) == 0 then
+      print("Im out of fuel")
+    else
+      turtle.select(1)
+      turtle.refuel(10)
+      turtle.select(1)
+    end
+  end
+end
+
+function torch()
+  if turtle.getItemCount(2) == 0 then
+    print("Im out of torches")
+  else   
+    turtle.select(2)
+    turtle.placeDown()
+    turtle.select(1)
+  end
+end
+
+function dropOff()
+  for q = 4, 16 do
+    turtle.select(q)
+    turtle.drop()
+  end
+  turtle.select(1)
+end
+
+function dropOffUp()
+  for q = 4, 16 do
+    turtle.select(q)
+    turtle.dropUp()
+  end
+  turtle.select(1)
+end
+
+
+function pickUp()
+  for p = 4, 16 do
+    turtle.select(p)
+    turtle.suckUp()
+  end
+  turtle.select(1)
+end
+ 
+function placeChest()
+  turtle.select(3)
+  turtle.placeUp()
+  turtle.select(1)
+  dropOffUp()
+end
+
+function branch()
+  for i = 1, numMoves do
+    refuel()
+    while turtle.detect() == true do
+      turtle.dig() 
+    end
+    while turtle.forward() ~= true do
+      turtle.dig()
+    end
+    while turtle.detectUp() == true do
+      turtle.digUp()
+    end
+    while turtle.detectDown() == true do
+      turtle.digDown()
+    end
+    if numMoves >= 10 then
+      if (i % 10 == 0) then
+        torch()
+      end
+    end
+    if numMoves >= 50 then
+      if (i % 50 == 0) then
+        placeChest()
+      end
+    end
+  end
+  turtle.turnLeft()
+  turtle.turnLeft()
+  for j = 1, numMoves do
+    turtle.forward()
+  end
+end
+
+function returnHome()
+  returnVal = numMoves / 100
+  if returnVal >= 1 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a1 = 1, 100 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+          turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a2 = 1, 100 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 2 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a3 = 1, 200 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a4 = 1, 200 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 3 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a5 = 1, 300 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a6 = 1, 300 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 4 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a7 = 1, 400 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a8 = 1, 400 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 5 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a9 = 1, 500 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a10 = 1, 500 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 6 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a11 = 1, 600 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a12 = 1, 600 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 7 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a13 = 1, 700 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a14 = 1, 700 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 8 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a15 = 1, 800 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a16 = 1, 800 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 9 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a17 = 1, 900 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a18 = 1, 900 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 10 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a19 = 1, 1000 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a20 = 1, 1000 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 11 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a21 = 1, 1100 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a22 = 1, 1100 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 12 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a23 = 1, 1200 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a24 = 1, 1200 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 13 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a25 = 1, 1300 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a26 = 1, 1300 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >=  14	then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a27 = 1, 1400 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a28 = 1, 1400 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 15	then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a29 = 1, 1500 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a30 = 1, 1500 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+	if returnVal >= 16 then
+    turtle.turnLeft()
+    dropOff()
+    turtle.turnLeft()
+      for a31 = 1, 1600 do
+	    refuel()
+        while turtle.forward() ~= true do
+          turtle.dig()
+		  turtle.attack()
+        end
+      end
+	  pickUp()
+	  turtle.digUp()
+	  turtle.turnLeft()
+	  turtle.turnLeft()
+	  for a32 = 1, 1600 do
+	      refuel()
+		  while turtle.forward() ~=true do
+		    turtle.dig()
+			turtle.attack()
+		  end
+	  end
+	end
+end
+
+--Main code
+
+if #tArgs < 1 then
+  printUsage()
+elseif extraArgs ~= null then
+  print("Too many arguments")
+else
+returnHome()
+end
+
+--End of Main code

@@ -1,0 +1,6 @@
+while true do
+  level = turtle.getFuelLevel()
+  print("My Fuel Level is " .. level)
+  os.sleep(20)
+end
+

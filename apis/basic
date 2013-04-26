@@ -1,0 +1,103 @@
+-- My API
+
+--Refuel Function
+--Pass in two variable <The slot to refuel from> <The amount>
+function refuel(slot , amount)
+  local slot1 = tonumber(slot)
+  local amount1 = tonumber(amount)
+  if slot <= 16 then		
+    if turtle.getFuelLevel() < 20 then
+	  print("My current fuel level is: " .. turtle.getFuelLevel())
+      if turtle.getItemCount(slot1) < amount then
+        print("Im out of fuel")
+      else
+      turtle.select(slot1)
+      turtle.refuel(amount1)
+      turtle.select(1)
+	  print("My New Fuel is: " .. turtle.getFuelLevel())
+      end
+    end
+  else 
+    error("Slot size is too big[Refuel]")
+  end
+end
+
+--Place torch function
+--Pass in two variables <The slot where the torches are> <the direcion to place it [up(1) or down(2)]>
+function torch(slot , direction)
+  local slot1 = tonumber(slot)
+  local direction1 = tonumber(direction)
+  if turtle.getItemCount(slot1) == 0 then
+    print("Im out of torches")
+  else   
+    turtle.select(slot1)
+	if direction == 1 then
+		turtle.placeUp()
+    elseif direction == 2 then
+		turtle.placeDown()
+	else
+		error("Invalid direction [torch]")
+	end
+    turtle.select(1)
+  end
+end
+
+--Digs a 3 high passge way
+
+function digForward()
+    while turtle.detect() == true do
+	  turtle.dig()
+	end
+	while turtle.forward() ~= true do
+	  turtle.dig()
+	end
+	while turtle.detectUp() == true do
+      turtle.digUp()
+    end
+    while turtle.detectDown() == true do
+      turtle.digDown()
+	end
+  end
+--Turnleft function to get to a new row
+--Pass in the distnce before it turns again
+
+function changeDirLeft(dist)
+  local dist1 = tonumber(dist)
+  turtle.turnLeft()
+  for i = 1 , dist1 do
+    basic.digForward()
+  end
+  turtle.turnLeft()
+end
+--Turnright function to get to a new row
+--Pass in the distnce before it turns again
+
+function changeDirRight(dist)
+  local dist1 = tonumber(dist)
+  turtle.turnRight()
+  for i = 1 , dist1 do
+	basic.digForward()
+  end
+  turtle.turnRight()
+end
+
+--Places a chest above the turtle and calls basic.dropOffUp
+--Pass in the slot the chest is in and the slot to start the drop off from
+function placeChest(slot, startSlot)
+  local slot1 = tonumber(slot)
+  local slot2 = tonumber(startSlot)
+  turtle.select(slot)
+  turtle.placeUp()
+  turtle.select(1)
+  dropOffUp(slot2)
+  moveDist = 0
+end
+function dropOffUp(startSlot)
+  local slot1 = tonumber(startSlot)
+  for q = slot1, 16 do
+    turtle.select(q)
+    turtle.dropUp()
+  end
+  turtle.select(1)
+  turtle.digUp()
+end

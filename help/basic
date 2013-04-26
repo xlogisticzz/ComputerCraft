@@ -1,0 +1,30 @@
+Basic is an api made by xLoGisTicZz to help him with his code
+
+The Functions are:
+
+refuel(<Slot number>, <amount>)
+	This refuels a given amount from a given slot.
+	It will also pass out errors if there is no more fuel and or the slot specfied is not possible.
+	
+torch(<slot number> , <direction>)
+	Places torces in a given direction
+	Pass in two variables <The slot where the torches are> <the direcion to place it [1(up) or 2(down)]>
+
+digForward(<distance>)
+	digs a passageway 1 block above and below the turtle.
+	Nothing to pass in.
+	
+changeDirLeft(<dist>)
+	turnleft function to get to a new row
+	pass in the distnce before it turns again
+	
+changeDirRight(<dist>)
+	turnright function to get to a new row
+	pass in the distance before it turns again
+	
+placeChest(<slot>, <startSlot>)
+	places an enderchest in a slot up and calls basic.dropOffUp and drops off all items above slot 3
+	
+dropOffUp(<startslot>)
+	
+	

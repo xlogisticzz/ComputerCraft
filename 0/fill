@@ -1,0 +1,95 @@
+local tArgs = {...} 
+local slot = 1
+local xNum = tonumber(tArgs[1])
+local zNum = tonumber(tArgs[2])
+local zDist = zNum / 2
+
+function usage()
+  print("Usage:")
+  print("fill <X size> <Z size>")
+  print("The Z size needs to be a multiple of 2")
+end
+
+function refuel()
+  if turtle.getFuelLevel() <= 30 then
+    turtle.select(16)
+    turtle.refuel(10)
+    turtle.select(slot)
+  end 
+end
+
+if #tArgs ~= 2 then
+  print("Incorrect Usage")
+  usages()
+else
+  for j = 1 , zDist do
+    for i = 1 , xNum do
+      refuel()
+      while turtle.forward() ~= true do
+        turtle.dig()
+        turtle.attack()
+      end
+      while turtle.detectDown() ~= true do
+        if turtle.getItemCount(slot) ~= 0 then 
+          turtle.placeDown()
+        else 
+          slot = slot + 1
+          turtle.select(slot)
+          turtle.placeDown()
+        end
+      end
+      while turtle.detectUp() == true do
+        turtle.digUp()
+        turtle.up()
+      end
+      while turtle.detectDown() ~= true do
+        turtle.down()
+      end
+    end
+    turtle.turnLeft()
+    turtle.dig()
+    turtle.forward()
+    while turtle.detectUp() == true do
+      turtle.digUp()
+      turtle.up()
+    end
+    while turtle.detectDown() ~= true do
+      turtle.down()
+    end
+    turtle.turnLeft()
+    for k = 1 , xNum do
+      refuel()
+      while turtle.forward() ~= true do
+        turtle.dig()
+        turtle.attack()
+      end
+      while turtle.detectDown() ~= true do
+        if turtle.getItemCount(slot) ~= 0 then
+          turtle.placeDown()
+        else
+          slot = slot + 1
+          turtle.select(slot) 
+          turtle.placeDown()
+        end
+      end
+      while turtle.detectUp() == true do
+        turtle.digUp()
+        turtle.up()
+      end
+      while turtle.detectDown() ~= true do
+        turtle.down()
+      end
+    end
+    turtle.turnRight()
+    turtle.dig()
+    turtle.forward()
+    while turtle.detectUp() == true do 
+      turtle.digUp()
+      turtle.up()
+    end
+    while turtle.detectDown() ~= true do
+      turtle.down()
+    end
+    turtle.turnRight()
+  end
+end

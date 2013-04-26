@@ -1,0 +1,3 @@
+shell.run("label", "get")
+i = turtle.getFuelLevel()
+print("My fuel Level is " .. i)

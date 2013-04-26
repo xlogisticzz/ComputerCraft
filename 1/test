@@ -1,0 +1,6 @@
+h = fs.open("info", "w")
+h.write("hi")
+h.close()
+h = fs.open("info", "r")
+print(h.readAll())
+h.close()

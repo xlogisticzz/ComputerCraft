@@ -1,0 +1,141 @@
+local tArgs = {...}
+local numMoves = 0
+
+function refuel(slot , amount)
+  local slot1 = tonumber(slot)
+  local amount1 = tonumber(amount)
+  if slot <= 16 then		
+    if turtle.getFuelLevel() < 20 then
+	  print("My current fuel level is: " .. turtle.getFuelLevel())
+      if turtle.getItemCount(slot1) < amount then
+        print("Im out of fuel")
+      else
+      turtle.select(slot1)
+      turtle.refuel(amount1)
+      turtle.select(1)
+	  print("My New Fuel is: " .. turtle.getFuelLevel())
+      end
+    end
+  else 
+    error("Slot size is too big[Refuel]")
+  end
+end
+function placeChest(slot, startSlot)
+  local slot1 = tonumber(slot)
+  local slot2 = tonumber(startSlot)
+  turtle.select(slot)
+  turtle.placeUp()
+  turtle.select(1)
+  dropOffUp(slot2)
+  moveDist = 0
+end
+function dropOffUp(startSlot)
+  local slot1 = tonumber(startSlot)
+  for q = slot1, 16 do
+    turtle.select(q)
+	while turtle.getItemCount(q) ~= 0  do
+		turtle.dropUp()
+		os.sleep(.05)
+	end
+  end
+  turtle.select(1)
+  turtle.digUp()
+end
+function torch(slot , direction)
+  local slot1 = tonumber(slot)
+  local direction1 = tonumber(direction)
+  if turtle.getItemCount(slot1) == 0 then
+    print("Im out of torches")
+  else   
+    turtle.select(slot1)
+	if direction == 1 then
+		turtle.placeUp()
+    elseif direction == 2 then
+		turtle.placeDown()
+	else
+		error("Invalid direction [torch]")
+	end
+    turtle.select(1)
+  end
+end
+function iniDrop()
+	if numMoves == 69 then
+		print("Jack is dirty minded and suggested 69 as the threshold")
+		placeChest(3, 4)
+		numMoves = 0
+	end
+end
+function digForward()
+	while turtle.forward() ~= true do
+		turtle.dig()
+		iniDrop()
+	end
+
+	numMoves = numMoves + 1
+	while turtle.down() ~= true do
+		turtle.digDown()
+		iniDrop()
+	end
+	numMoves = numMoves + 1
+	turtle.turnLeft()
+	while turtle.detect() == true do
+		turtle.dig()
+		iniDrop()
+	end
+	turtle.turnRight()
+	turtle.turnRight()
+	while turtle.detect() == true do
+		turtle.dig()
+		iniDrop()
+	end
+	turtle.turnLeft()
+	while turtle.up() ~= true do
+		turtle.digUp()
+		iniDrop()
+	end
+	numMoves = numMoves + 1
+	turtle.turnLeft()
+	while turtle.detect() == true do
+		turtle.dig()
+		iniDrop()
+	end
+	turtle.turnRight()
+	turtle.turnRight()
+	while turtle.detect() == true do
+		turtle.dig()
+		iniDrop()
+	end
+	turtle.turnLeft()
+	while turtle.up() ~= true do
+		turtle.digUp()
+		iniDrop()
+	end
+	numMoves = numMoves + 1
+	turtle.turnLeft()
+	while turtle.detect() == true do
+		turtle.dig()
+		iniDrop()
+	end
+	turtle.turnRight()
+	turtle.turnRight()
+	while turtle.detect() == true do
+		turtle.dig()
+		iniDrop()
+	end
+	turtle.turnLeft()
+	turtle.down()
+	numMoves = numMoves + 1
+end
+
+if #tArgs ~= 1 then
+	error("Too many Arguments/ Not enough Arguments")
+else
+	for i = 1, tonumber(tArgs[1]) do
+		refuel(1,10)
+		digForward()
+		if (i % 10 == 0) then
+			turtle.digDown()
+			torch(2 , 2)
+		end
+	end
+end

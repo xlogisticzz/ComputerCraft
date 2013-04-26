@@ -1,0 +1,28 @@
+local tArgs = {...}
+local numMoves = tonumber(tArgs[1])
+
+function printUsage()
+  print("Usages:")
+  print("Branchmine <distance>")
+end
+
+function branch()
+  for i = 1, numMoves do
+    basic.refuel(1 , 10)
+    basic.digForward()
+    if numMoves >= 10 then
+      if (i % 10 == 0) then
+        basic.torch(2, 2)
+      end
+    end
+  end
+  for j = 1, numMoves do
+    turtle.back()
+  end
+end
+
+if #tArgs < 1 then
+  printUsage()
+else
+  branch()
+end

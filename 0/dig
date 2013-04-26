@@ -1,0 +1,24 @@
+local sections = 0
+
+
+print("Enter the amount of 7 block sections ")
+term.write("you want to dig: ")
+sections = io.read()
+
+if sections ~= exit then
+
+  for ii = 1,sections do
+    for i = 1, 7 do
+      while turtle.forward() ~= true do
+        turtle.dig()
+      end
+      while turtle.detectUp() == true do
+        turtle.digUp()
+      end
+    end
+    
+    turtle.select(13)
+    turtle.placeUp()
+    turtle.select(1)
+  end
+end

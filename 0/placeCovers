@@ -1,0 +1,54 @@
+--Intialising Variables
+local slot = 2
+
+--Functions
+function getCount()
+  for i = 1 , 16 do
+    if turtle.getItemCount(slot) == 0 then 
+      slot = slot + 1 
+      if slot <= 16 then
+  	    turtle.select(slot)
+      else
+        error("out of glass")
+      end
+    end
+  end
+end
+function refuel(slot , amount)
+  local slot1 = tonumber(slot)
+  local amount1 = tonumber(amount)
+  if slot <= 16 then		
+    if turtle.getFuelLevel() < 20 then
+	  print("My current fuel level is: " .. turtle.getFuelLevel())
+      if turtle.getItemCount(slot1) < amount then
+        print("Im out of fuel")
+      else
+      turtle.select(slot1)
+      turtle.refuel(amount1)
+      turtle.select(1)
+	  print("My New Fuel is: " .. turtle.getFuelLevel())
+      end
+    end
+  else 
+    error("Slot size is too big[Refuel]")
+  end
+end
+
+-- Main code
+turtle.select(slot)
+while true do
+  while turtle.detectUp() ~= true do
+    refuel(1, 10)
+    turtle.up()
+	getCount()
+    turtle.place()
+  end
+  turtle.turnLeft()
+  turtle.forward()
+  refuel(1, 10)
+  turtle.turnRight()
+  while turtle.detectDown() ~= true do
+    refuel(1, 10)
+    turtle.down()
+  end
+end

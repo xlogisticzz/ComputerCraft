@@ -1,0 +1,292 @@
+local event = 1
+local side = 1
+local xPos = 1
+local yPos = 1
+selectionindent = 4
+selectionindent1 = 18
+function getEvent()
+	event, side, xPos, yPos = os.pullEvent("monitor_touch")
+	print(event .. " => Side: " .. tostring(side) .. ", " .. "X: " .. tostring(xPos) .. ", " .. "Y: " .. tostring(yPos))
+end
+
+local Skelenton = false
+local Creeper = false
+local Enderman = false
+local Wither = false
+local var5 = false
+local var6 = false
+local var7 = false
+local var8 = false
+
+function readFile()
+	i = fs.open("info","r")
+	if i.readLine() == "SkelentonTrue" then
+		Skelenton = true
+	else
+		Skelenton = false
+	end
+	if i.readLine() == "CreeperTrue" then
+		Creeper = true
+	else
+		Creeper = false
+	end
+	if i.readLine() == "EndermanTrue" then
+		Enderman = true
+	else
+		Enderman = false
+	end
+	if i.readLine() == "WitherTrue" then
+		Wither = true
+	else
+		Wither = false
+	end
+	if i.readLine() == "var5True" then
+		var5 = true
+	else
+		var5 = false
+	end
+	if i.readLine() == "var6True" then
+		var6 = true
+	else
+		var6 = false
+	end
+	if i.readLine() == "var7True" then
+		var7 = true
+	else
+		var7 = false
+	end
+	if i.readLine() == "var8True" then
+		var8 = true
+	else
+		var8 = false
+	end
+	i.close()
+end
+function saveFile()
+	fs.delete("info")
+	h = fs.open("info", "w")
+	if Skelenton == true then
+		h.writeLine("SkelentonTrue")
+	else
+		h.writeLine("SkelentonFalse")
+	end
+	if Creeper == true then
+		h.writeLine("CreeperTrue")
+	else
+		h.writeLine("CreeperFalse")
+	end
+	if Enderman == true then
+		h.writeLine("EndermanTrue")
+	else
+		h.writeLine("EndermanFalse")
+	end
+	if Wither == true then
+		h.writeLine("WitherTrue")
+	else
+		h.writeLine("WitherFalse")
+	end
+	if var5 == true then
+		h.writeLine("var5True")
+	else
+		h.writeLine("var5False")
+	end
+	if var6 == true then
+		h.writeLine("var6True")
+	else
+		h.writeLine("var6False")
+	end
+	if var7 == true then
+		h.writeLine("var7True")
+	else
+		h.writeLine("var7False")
+	end
+	if var8 == true then
+		h.writeLine("var8True")
+	else
+		h.writeLine("var8False")
+	end
+	h.close()
+end
+function updateVars()
+	if xPos > 3 and xPos < 13 and yPos == 3 and Skelenton == false then
+		Skelenton = true
+		rs.setBundledOutput("bottom" , 1)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	elseif xPos > 3 and xPos < 13 and yPos == 3 and Skelenton == true then
+		Skelenton = false
+		rs.setBundledOutput("bottom" , 1)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	end
+	if xPos > 17 and xPos < 25 and yPos == 3 and Creeper == false then
+		Creeper = true
+		rs.setBundledOutput("bottom" , 2)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	elseif xPos > 17 and xPos < 25 and yPos == 3 and Creeper == true then
+		Creeper = false
+		rs.setBundledOutput("bottom" , 2)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	end
+	if xPos > 3 and xPos < 12 and yPos == 5 and Enderman == false then
+		Enderman = true
+		rs.setBundledOutput("bottom" , 4)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	elseif xPos > 3 and xPos < 12 and yPos == 5 and Enderman == true then
+		Enderman = false
+		rs.setBundledOutput("bottom" , 4)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	end
+	if xPos > 17 and xPos < 24 and yPos == 5 and Wither == false then
+		Wither = true
+		rs.setBundledOutput("bottom" , 8)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	elseif xPos > 17 and xPos < 24 and yPos == 5 and Wither == true then
+		Wither = false
+		rs.setBundledOutput("bottom" , 8)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	end
+	if xPos > 3 and xPos < 9 and yPos == 7 and var5 == false then
+		var5 = true
+		rs.setBundledOutput("bottom" , 16)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	elseif xPos > 3 and xPos < 9 and yPos == 7 and var5 == true then
+		var5 = false
+		rs.setBundledOutput("bottom" , 16)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	end
+	if xPos > 17 and xPos < 24 and yPos == 7 and var6 == false then
+		var6 = true
+		rs.setBundledOutput("bottom" , 32)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	elseif xPos > 17 and xPos < 24 and yPos == 7 and var6 == true then
+		var6 = false
+		rs.setBundledOutput("bottom" , 32)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	end
+	if xPos > 3 and xPos < 7 and yPos == 9 and var7 == false then
+		var7 = true
+		rs.setBundledOutput("bottom" , 64)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	elseif xPos > 3 and xPos < 7 and yPos == 9 and var7 == true then
+		var7 = false
+		rs.setBundledOutput("bottom" , 64)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	end
+	if xPos > 17 and xPos < 21 and yPos == 9 and var8 == false then
+		var8 = true
+		rs.setBundledOutput("bottom" , 128)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	elseif xPos > 17 and xPos < 21 and yPos == 9 and var8 == true then
+		var8 = false
+		rs.setBundledOutput("bottom" , 128)
+		os.sleep(0.5)
+		rs.setBundledOutput("bottom" , 0)
+	end
+end
+function printMenu()
+	m.setTextScale(1.25)
+	m.clear()
+	m.setCursorPos(selectionindent, 3)
+	if Skelenton == true then
+		m.setTextColor(colors.green)
+		m.write("Skelenton")
+		m.setTextColor(colors.white)
+	else
+		m.setTextColor(colors.red)
+		m.write("Skelenton")
+		m.setTextColor(colors.white)
+	end
+	m.setCursorPos(selectionindent1, 3)
+	if Creeper == true then
+		m.setTextColor(colors.green)
+		m.write("Creeper")
+		m.setTextColor(colors.white)
+	else
+		m.setTextColor(colors.red)
+		m.write("Creeper")
+		m.setTextColor(colors.white)
+	end
+	m.setCursorPos(selectionindent, 5)
+	if Enderman == true then
+		m.setTextColor(colors.green)
+		m.write("Enderman")
+		m.setTextColor(colors.white)
+	else
+		m.setTextColor(colors.red)
+		m.write("Enderman")
+		m.setTextColor(colors.white)
+	end
+	m.setCursorPos(selectionindent1, 5)
+	if Wither == true then
+		m.setTextColor(colors.green)
+		m.write("Wither")
+		m.setTextColor(colors.white)
+	else
+		m.setTextColor(colors.red)
+		m.write("Wither")
+		m.setTextColor(colors.white)
+	end
+	m.setCursorPos(selectionindent, 7)
+	if var5 == true then
+		m.setTextColor(colors.green)
+		m.write("var5")
+		m.setTextColor(colors.white)
+	else
+		m.setTextColor(colors.red)
+		m.write("var5")
+		m.setTextColor(colors.white)
+	end
+	m.setCursorPos(selectionindent1, 7)
+	if var6 == true then
+		m.setTextColor(colors.green)
+		m.write("var6")
+		m.setTextColor(colors.white)
+	else
+		m.setTextColor(colors.red)
+		m.write("var6")
+		m.setTextColor(colors.white)
+	end
+	m.setCursorPos(selectionindent, 9)
+	if var7 == true then
+		m.setTextColor(colors.green)
+		m.write("var7")
+		m.setTextColor(colors.white)
+	else
+		m.setTextColor(colors.red)
+		m.write("var7")
+		m.setTextColor(colors.white)
+	end
+	m.setCursorPos(selectionindent1, 9)
+	if var8 == true then
+		m.setTextColor(colors.green)
+		m.write("var8")
+		m.setTextColor(colors.white)
+	else
+		m.setTextColor(colors.red)
+		m.write("var8")
+		m.setTextColor(colors.white)
+	end
+end
+
+readFile()
+while true do
+	m.write(printMenu())
+	getEvent()
+	updateVars()
+	saveFile()
+end
+

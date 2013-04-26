@@ -1,0 +1,92 @@
+m = peripheral.wrap("top")
+local var = {}
+local RsSide = "bottom"
+function getEvent()
+	event, side, xPos, yPos = os.pullEvent("monitor_touch")
+end
+function setTable(val, name, active, xstart, ystart)
+   var[tostring(val)] = {}
+   var[tostring(val)]["name"] = tostring(name)
+   var[tostring(val)]["active"] = active
+   var[tostring(val)]["xstart"] = xstart
+   var[tostring(val)]["ystart"] = ystart
+   var[tostring(val)]["length"] = string.len(tostring(name))
+end
+function fillTable()
+	setTable(1, "Enderman", true, 3, 2)
+    setTable(2, "Creeper", false, 15, 2)
+end
+function saveFile()
+	fs.delete("infoa")
+	h = fs.open("infoa","w")
+	local num = 1
+	for name,data in pairs(var) do
+		if data["active"] == true then
+			h.writeLine("var".. num .. "true")
+			num = num + 1
+		else
+			h.writeLine("var".. num .. "false")
+			num = num + 1
+		end
+	end
+	num = 1
+	h.close()			
+end
+function readFile()
+	local num1 = 1
+	i = fs.open("infoa","r")
+	for name,data in pairs(var) do
+		local checkvar = ("var" .. num1 .. "true")
+		if i.readLine() == checkvar then
+			data["active"] = true
+			num1 = num1 + 1
+			print(data["name"] .. "true")
+		else
+			data["active"] = false
+			num1 = num1 + 1
+			print(data["name"] .. "false")
+		end
+	end
+i.close()
+end
+function PrintMenu()
+	m.setTextScale(1.4)
+	m.clear()
+	for name,data in pairs(var) do
+		m.setCursorPos(tonumber(data["xstart"]), tonumber(data["ystart"]))
+		if data["active"] == true then
+			m.setTextColor(colors.green)
+			m.write(tostring(data["name"]))
+		else
+			m.setTextColor(colors.red)
+			m.write(tostring(data["name"]))
+		end
+	end
+end
+function updateVar()
+	for name, data in pairs(var) do
+      if yPos == tonumber(data["ystart"]) then
+         if xPos >= tonumber(data["xstart"]) and xPos <= tonumber(data["xstart"]) + tonumber(data["length"]) then
+            data["active"] = not data["active"]
+			local freq = math.pow(2, name - 1) 
+			print(tostring(freq))
+			--rs.setBundledOutput(RsSide , freq)
+			--os.sleep(0.5)
+			--rs.setBundledOutput(RsSide , 0)
+         end
+      end
+   end
+end
+
+
+fillTable()
+readFile()
+while true do 
+	PrintMenu()
+	getEvent()
+	updateVar()
+	saveFile()
+end
+
+
+

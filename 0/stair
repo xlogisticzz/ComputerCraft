@@ -1,0 +1,85 @@
+local tArgs = {...}
+local moveDist = tonumber(tArgs[1])
+
+function placeStair()
+  if turtle.getItemCount(3) == 0 then
+    print("Im out of stairs")
+  else
+    turtle.select(3)
+    turtle.place()
+    turtle.select(1)
+  end
+end
+function refuel(slot , amount)
+  local slot1 = tonumber(slot)
+  local amount1 = tonumber(amount)
+  if slot <= 16 then		
+    if turtle.getFuelLevel() < 20 then
+	  print("My current fuel level is: " .. turtle.getFuelLevel())
+      if turtle.getItemCount(slot1) < amount then
+        print("Im out of fuel")
+      else
+      turtle.select(slot1)
+      turtle.refuel(amount1)
+      turtle.select(1)
+	  print("My New Fuel is: " .. turtle.getFuelLevel())
+      end
+    end
+  else 
+    error("Slot size is too big[Refuel]")
+  end
+end
+function torch(slot , direction)
+  local slot1 = tonumber(slot)
+  local direction1 = tonumber(direction)
+  if turtle.getItemCount(slot1) == 0 then
+    print("Im out of torches")
+  else   
+    turtle.select(slot1)
+	if direction == 1 then
+		turtle.placeUp()
+    elseif direction == 2 then
+		turtle.placeDown()
+	else
+		error("Invalid direction [torch]")
+	end
+    turtle.select(1)
+  end
+end
+function stair()
+  for i = 1, moveDist do
+    refuel(1 , 10)
+    turtle.digDown()
+    turtle.down()
+    for j = 1, 4 do
+      while turtle.forward() ~= true do
+        turtle.dig()
+      end
+    end
+    turtle.turnLeft()
+    turtle.turnLeft()
+    while turtle.forward() ~= true do
+      turtle.dig()    
+    end
+	if moveDist >= 5 then
+	  if (i % 5 == 0) then
+	    torch(2 , 1)
+	  end
+	end
+    while turtle.forward() ~= true do
+      turtle.dig()
+    end
+    while turtle.forward() ~= true do
+      turtle.dig()
+    end
+    placeStair()
+    turtle.turnLeft()
+    turtle.turnLeft()
+  end
+end
+ 
+if #tArgs ~= 1 then
+	error("Too mamy arguments")
+else
+	stair()
+end

@@ -1,0 +1,117 @@
+m = peripheral.wrap("top")
+local var = {}
+local RsSide = "bottom"
+function getEvent()
+	event, side, xPos, yPos = os.pullEvent("monitor_touch")
+	print(tostring(xPos) .. " " .. tostring(yPos))
+end
+function setTable(val, name, funct, active, xstart, ystart)
+   var[tostring(val)] = {}
+   var[tostring(val)]["name"] = tostring(name)
+   var[tostring(val)]["funct"] = funct
+   var[tostring(val)]["active"] = active
+   var[tostring(val)]["xstart"] = xstart
+   var[tostring(val)]["ystart"] = ystart
+   var[tostring(val)]["length"] = string.len(tostring(name))
+end
+function fillTable()
+	setTable(1, "Solar Panel", solarPanel, false, 39, 2)
+end
+function solarPanel()
+	produce = false
+	m.clear()
+	setTable(2, "Confirm", solarMake , false,  8 , 12)
+	setTable(3, "Cancel", solarNoMake , false,  20 , 12)
+	PrintMenu()
+	m.setTextColor(colors.orange)
+	m.setCursorPos(7,2)
+	m.write("You are about to make")
+	m.setCursorPos(11,4)
+	m.write("A solar panel")
+	m.setCursorPos(2,6)
+	m.write("Are you sure you want to do this.")
+	m.setCursorPos(4,8)
+	m.write("Make sure the correct amount")
+	m.setCursorPos(7,10)
+	m.write("of UU is in the chest.")
+	getEvent()
+	updateVar()
+	if produce == true then
+		var = {}
+		fillTable()
+		m.clear()
+		PrintMenu()
+		m.setCursorPos(4,4)
+		m.write("Please Wait (Making now)")
+		os.sleep(5)
+		
+		m.clear()
+		PrintMenu()
+		m.setCursorPos(4,4)
+		m.write("Please Take your Panel")
+		m.setCursorPos(8,6)
+		m.write("from the chest")
+		os.sleep(5)
+		
+		m.clear()
+		PrintMenu()
+		produce = false
+	else
+		var = {}
+		fillTable()
+		m.clear()
+		PrintMenu()
+	end
+end
+function solarMake()
+	print("making a solar panel")
+end
+function solarNoMake()
+	print("not makeing anything")
+end
+function PrintMenu()
+	m.clear()
+	m.setTextScale(1.4)
+	for name,data in pairs(var) do
+		m.setCursorPos(tonumber(data["xstart"]), tonumber(data["ystart"]))
+		if data["active"] == true then
+			m.setTextColor(colors.green)
+			m.write(tostring(data["name"]))
+		else
+			m.setTextColor(colors.red)
+			m.write(tostring(data["name"]))
+		end
+	end
+	for i = 1 , 20 do
+		m.setTextColor(colors.orange)
+		m.setCursorPos(35 , i)
+		m.write("|")
+	end
+end
+function updateVar()
+	for name, data in pairs(var) do
+      if yPos == tonumber(data["ystart"]) then
+         if xPos >= tonumber(data["xstart"]) and xPos <= tonumber(data["xstart"]) + tonumber(data["length"]) then
+            if data["name"] == "Confirm" then
+				produce = true
+			end
+			data["active"] = not data["active"]
+			data["funct"]()
+			local freq = math.pow(2, name - 1) 
+			--rs.setBundledOutput(RsSide , freq)
+			--os.sleep(0.5)
+			--rs.setBundledOutput(RsSide , 0)
+         end
+      end
+   end
+end
+
+
+fillTable()
+while true do 
+	PrintMenu()
+	getEvent()
+	updateVar()
+end
+
+

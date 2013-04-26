@@ -1,0 +1,119 @@
+-- Initalizing Vriables
+local tArgs = {...}
+local numMoves = tonumber(tArgs[1])
+local extraArgs = tonumber(tArgs[2])
+local returnVal = 1
+
+--End of Varables
+
+--Functions
+function printUsage()
+  print("Usages:")
+  print("digTunnel <distance>")
+end
+function refuel(slot , amount)
+  local slot1 = tonumber(slot)
+  local amount1 = tonumber(amount)
+  if slot <= 16 then		
+    if turtle.getFuelLevel() < 20 then
+	  print("My current fuel level is: " .. turtle.getFuelLevel())
+      if turtle.getItemCount(slot1) < amount then
+        print("Im out of fuel")
+      else
+      turtle.select(slot1)
+      turtle.refuel(amount1)
+      turtle.select(1)
+	  print("My New Fuel is: " .. turtle.getFuelLevel())
+      end
+    end
+  else 
+    error("Slot size is too big[Refuel]")
+  end
+end
+function digForward()
+    while turtle.detect() == true do
+	  turtle.dig()
+	end
+	while turtle.forward() ~= true do
+	  turtle.dig()
+	end
+	while turtle.detectUp() == true do
+      turtle.digUp()
+    end
+    while turtle.detectDown() == true do
+      turtle.digDown()
+	end
+  end
+function torch(slot , direction)
+  local slot1 = tonumber(slot)
+  local direction1 = tonumber(direction)
+  if turtle.getItemCount(slot1) == 0 then
+    print("Im out of torches")
+  else   
+    turtle.select(slot1)
+	if direction == 1 then
+		turtle.placeUp()
+    elseif direction == 2 then
+		turtle.placeDown()
+	else
+		error("Invalid direction [torch]")
+	end
+    turtle.select(1)
+  end
+end
+function placeChest(slot, startSlot)
+  local slot1 = tonumber(slot)
+  local slot2 = tonumber(startSlot)
+  turtle.select(slot)
+  turtle.placeUp()
+  turtle.select(1)
+  dropOffUp(slot2)
+  moveDist = 0
+end
+function dropOffUp(startSlot)
+  local slot1 = tonumber(startSlot)
+  for q = slot1, 16 do
+    turtle.select(q)
+	while turtle.getItemCount(q) ~= 0  do
+		turtle.dropUp()
+		os.sleep(.05)
+	end
+  end
+  turtle.select(1)
+  turtle.digUp()
+end
+function branch()
+  for i = 1, numMoves do
+    refuel(1 , 10)
+    digForward()
+    if numMoves >= 10 then
+      if (i % 10 == 0) then
+        torch(2 , 1)
+      end
+    end
+    if numMoves >= 100 then
+      if (i % 100 == 0) then
+        placeChest(3, 4)
+      end
+    end
+  end
+  turtle.turnLeft()
+  turtle.turnLeft()
+  for j = 1, numMoves do
+    turtle.forward()
+  end
+end
+
+--End of Functions
+
+--Main code
+
+if #tArgs < 1 then
+  printUsage()
+elseif extraArgs ~= null then
+  error("Too many arguments")
+else
+branch()
+end
+
+--End of Main code
